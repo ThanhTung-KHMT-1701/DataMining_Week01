@@ -11,7 +11,7 @@ pm.execute_notebook(
         DATA_PATH="data/raw/online_retail.csv",
         COUNTRY="United Kingdom",
         OUTPUT_DIR="data/processed",
-        PLOT_REVENUE=False,         # tắt bớt plot khi chạy batch
+        PLOT_REVENUE=True,         # tắt bớt plot khi chạy batch
         PLOT_TIME_PATTERNS=False,
         PLOT_PRODUCTS=False,
         PLOT_CUSTOMERS=False,
