@@ -11,11 +11,11 @@ pm.execute_notebook(
         DATA_PATH="data/raw/online_retail.csv",
         COUNTRY="United Kingdom",
         OUTPUT_DIR="data/processed",
-        PLOT_REVENUE=False,         # tắt bớt plot khi chạy batch
-        PLOT_TIME_PATTERNS=False,
-        PLOT_PRODUCTS=False,
-        PLOT_CUSTOMERS=False,
-        PLOT_RFM=False,
+        PLOT_REVENUE=True,         # Bật để hiển thị biểu đồ
+        PLOT_TIME_PATTERNS=True,
+        PLOT_PRODUCTS=True,
+        PLOT_CUSTOMERS=True,
+        PLOT_RFM=True,
     ),
     kernel_name="python3",
 )
@@ -44,7 +44,10 @@ pm.execute_notebook(
         BASKET_BOOL_PATH="data/processed/basket_bool.parquet",
         RULES_OUTPUT_PATH="data/processed/rules_apriori_filtered.csv",
 
-        # Tham số Apriori
+        # === Tham số Apriori ===
+        # MIN_SUPPORT: Tỷ lệ tối thiểu giao dịch chứa itemset
+        # - Cao (0.02): Chỉ tìm mẫu phổ biến, ít luật, nhanh
+        # - Thấp (0.005): Nhiều mẫu, nhiều luật, chậm hơn
         MIN_SUPPORT=0.01,
         MAX_LEN=3,
 
@@ -52,23 +55,34 @@ pm.execute_notebook(
         METRIC="lift",
         MIN_THRESHOLD=1.0,
 
-        # Lọc luật
+        # === Lọc luật (Q2: Thay đổi các tham số này) ===
+        # FILTER_MIN_SUPPORT: Support tối thiểu của luật (0.01 = 1%)
         FILTER_MIN_SUPPORT=0.01,
+        
+        # FILTER_MIN_CONF: Confidence tối thiểu (xác suất B khi có A)
+        # - Cao (0.5): Luật tin cậy, phù hợp recommendation
+        # - Thấp (0.2): Nhiều luật, có thể kém tin cậy
         FILTER_MIN_CONF=0.3,
+        
+        # FILTER_MIN_LIFT: Lift tối thiểu (mức độ liên kết)
+        # - Lift > 1: A và B có liên quan dương
+        # - Cao (2.0): Mối liên hệ mạnh, ít luật
+        # - Thấp (1.0): Nhiều luật, bao gồm cả luật yếu
         FILTER_MIN_LIFT=1.2,
+        
         FILTER_MAX_ANTECEDENTS=2,
         FILTER_MAX_CONSEQUENTS=1,
 
         # Số luật để vẽ
         TOP_N_RULES=20,
 
-        # Tắt plot khi chạy batch (bật = True nếu muốn xem hình)
-        PLOT_TOP_LIFT=False,
-        PLOT_TOP_CONF=False,
-        PLOT_SCATTER=False,
-        PLOT_NETWORK=False,
-        PLOT_PLOTLY_NETWORK=False,
-        PLOT_PLOTLY_SCATTER=False,  
+        # Bật tất cả plot để hiển thị biểu đồ
+        PLOT_TOP_LIFT=True,
+        PLOT_TOP_CONF=True,
+        PLOT_SCATTER=True,
+        PLOT_NETWORK=True,
+        PLOT_PLOTLY_NETWORK=True,
+        PLOT_PLOTLY_SCATTER=True,  
     ),
     kernel_name="python3",
 )
