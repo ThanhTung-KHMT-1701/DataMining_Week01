@@ -67,8 +67,28 @@ pm.execute_notebook(
         PLOT_TOP_CONF=True,        # Top luật theo Confidence
         PLOT_SCATTER=True,         # Scatter plot Support-Confidence
         PLOT_NETWORK=True,         # Biểu đồ mạng luật kết hợp
-        PLOT_PLOTLY_NETWORK=True,  # Biểu đồ mạng tương tác (Plotly)
         PLOT_PLOTLY_SCATTER=True,  # Scatter plot tương tác (Plotly)
+    ),
+    kernel_name="python3",
+)
+
+# Chạy Notebook Thử Nghiệm Chủ Đề 07 - Phân tích luật niche
+pm.execute_notebook(
+    "notebooks/ThuNghiem_ChuDe07.ipynb",
+    "notebooks/runs/ThuNghiem_ChuDe07_run.ipynb",
+    parameters=dict(
+        RULES_PATH="data/processed/rules_apriori_filtered.csv",
+        OUTPUT_DIR="data/processed",
+
+        # Ngưỡng phân tích luật niche
+        LOW_SUPPORT_THRESHOLD=0.02,  # Support dưới 2% = niche
+        HIGH_LIFT_THRESHOLD=10.0,    # Lift trên 10 = liên kết mạnh
+        TOP_N_RULES=20,              # Số luật top để phân tích chi tiết
+
+        # Bật các biểu đồ phân tích
+        PLOT_SUPPORT_LIFT_SCATTER=True,  # Scatter plot Support vs Lift
+        PLOT_TOP_NICHE_RULES=True,       # Top luật niche
+        PLOT_SEGMENT_ANALYSIS=True,      # Phân tích theo phân khúc
     ),
     kernel_name="python3",
 )

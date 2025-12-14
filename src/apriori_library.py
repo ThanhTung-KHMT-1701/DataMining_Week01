@@ -482,6 +482,12 @@ class DataVisualizer:
         plt.ylabel("Doanh thu (GBP)")
         plt.xticks(rotation=45)
         plt.tight_layout()
+        
+        # Lưu ảnh
+        os.makedirs('images', exist_ok=True)
+        plt.savefig('images/revenue_by_month.png', dpi=300, bbox_inches='tight')
+        print("✅ Đã lưu ảnh: images/revenue_by_month.png")
+        
         plt.show()
 
     def plot_time_patterns(self, df):
@@ -496,11 +502,18 @@ class DataVisualizer:
         day_hour_counts = (
             df.groupby(["DayOfWeek", "HourOfDay"]).size().unstack(fill_value=0)
         )
-        sns.heatmap(day_hour_counts, cmap="viridis")
-        plt.title("Hoạt động mua hàng theo ngày và giờ")
-        plt.xlabel("Giờ trong ngày")
-        plt.ylabel("Ngày trong tuần (0=Thứ 2, 6=Chủ nhật)")
+        sns.heatmap(day_hour_counts, cmap="YlOrRd", annot=True, fmt='d', 
+                    linewidths=0.5, linecolor='white', cbar_kws={'label': 'Số giao dịch'})
+        plt.title("Hoạt động mua hàng theo ngày và giờ", fontsize=14, fontweight='bold')
+        plt.xlabel("Giờ trong ngày", fontsize=12)
+        plt.ylabel("Ngày trong tuần (0=Thứ 2, 6=Chủ nhật)", fontsize=12)
         plt.tight_layout()
+        
+        # Lưu ảnh
+        os.makedirs('images', exist_ok=True)
+        plt.savefig('images/shopping_patterns.png', dpi=300, bbox_inches='tight')
+        print("✅ Đã lưu ảnh: images/shopping_patterns.png")
+        
         plt.show()
 
     def plot_product_analysis(self, df, top_n=10):
@@ -537,6 +550,12 @@ class DataVisualizer:
         plt.title(f"Top {top_n} sản phẩm theo doanh thu")
         plt.xlabel("Doanh thu (GBP)")
         plt.tight_layout()
+        
+        # Lưu ảnh
+        os.makedirs('images', exist_ok=True)
+        plt.savefig('images/top_products.png', dpi=300, bbox_inches='tight')
+        print("✅ Đã lưu ảnh: images/top_products.png")
+        
         plt.show()
 
     def plot_customer_distribution(self, df):
@@ -708,10 +727,12 @@ class DataVisualizer:
             return
 
         plt.figure(figsize=(12, max(4, 0.4 * len(df))))
-        sns.barplot(data=df, x=sort_by, y="rule_str")
-        plt.title(f"{title} (theo {sort_by}) - Top {len(df)} luật")
-        plt.xlabel(sort_by.capitalize())
-        plt.ylabel("Luật (antecedent → consequent)")
+        # Gradient màu từ xanh đậm → cam nhạt
+        colors = plt.cm.RdYlBu_r(np.linspace(0.2, 0.8, len(df)))
+        sns.barplot(data=df, x=sort_by, y="rule_str", palette=colors)
+        plt.title(f"{title} (theo {sort_by}) - Top {len(df)} luật", fontsize=14, fontweight='bold')
+        plt.xlabel(sort_by.capitalize(), fontsize=12)
+        plt.ylabel("Luật (antecedent → consequent)", fontsize=12)
         plt.tight_layout()
         plt.show()
 
@@ -790,11 +811,16 @@ class DataVisualizer:
             c=rules_df["lift"],
             s=point_size,
             alpha=0.7,
+            cmap='plasma',  # Bảng màu plasma - tím → vàng
+            edgecolors='white',
+            linewidth=0.5
         )
-        plt.colorbar(scatter, label="Lift")
-        plt.xlabel("Support")
-        plt.ylabel("Confidence")
-        plt.title(title)
+        cbar = plt.colorbar(scatter, label="Lift")
+        cbar.ax.tick_params(labelsize=10)
+        plt.xlabel("Support", fontsize=12)
+        plt.ylabel("Confidence", fontsize=12)
+        plt.title(title, fontsize=14, fontweight='bold')
+        plt.grid(True, alpha=0.3, linestyle='--')
         plt.tight_layout()
         plt.show()
 
@@ -863,12 +889,14 @@ class DataVisualizer:
             pivot,
             annot=True,
             fmt=".2f",
-            cmap="viridis",
+            cmap="RdYlGn",  # Đỏ (thấp) → Vàng (trung bình) → Xanh (cao)
             linewidths=0.5,
+            linecolor='white',
+            cbar_kws={'label': metric.capitalize()}
         )
-        plt.title(title + f" (metric = {metric})")
-        plt.xlabel("Consequent")
-        plt.ylabel("Antecedent")
+        plt.title(title + f" (metric = {metric})", fontsize=14, fontweight='bold')
+        plt.xlabel("Consequent", fontsize=12)
+        plt.ylabel("Antecedent", fontsize=12)
         plt.tight_layout()
         plt.show()
     def plot_rules_support_confidence_scatter_interactive(
@@ -974,22 +1002,27 @@ class DataVisualizer:
         max_w = max(weights)
         norm_widths = [w / max_w * 2 for w in weights]  # scale về khoảng [0, 2]
 
-        # Vẽ node
-        nx.draw_networkx_nodes(G, pos, node_size=800, node_color="lightblue")
+        # Vẽ node - màu xanh dương pastel đẹp mắt
+        nx.draw_networkx_nodes(G, pos, node_size=800, 
+                               node_color="#87CEEB",  # Sky blue
+                               edgecolors="#4682B4",  # Steel blue border
+                               linewidths=2)
         # Vẽ label
-        nx.draw_networkx_labels(G, pos, font_size=9)
+        nx.draw_networkx_labels(G, pos, font_size=9, font_weight='bold')
 
-        # Vẽ edge có hướng
+        # Vẽ edge có hướng - màu gradient theo lift
+        edge_colors = plt.cm.Reds(np.array(norm_widths) / 2)
         nx.draw_networkx_edges(
             G,
             pos,
             arrowstyle="->",
             arrowsize=15,
             width=norm_widths,
-            edge_color="gray",
+            edge_color=edge_colors,
+            alpha=0.6
         )
 
-        plt.title(title)
+        plt.title(title, fontsize=14, fontweight='bold')
         plt.axis("off")
         plt.tight_layout()
         plt.show()
