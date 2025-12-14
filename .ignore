@@ -38,5 +38,6 @@ ENV/
 # IDE files
 .idea/
 .vscode/
+.conda/
 *.swp
 *.swo
