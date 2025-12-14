@@ -6,7 +6,7 @@
   - Nguyễn Hòa Bình - 1671040004
   - Đinh Tấn Phát - 1671040022
   - Lưu Thanh Tùng - 1771040029
-- **Chủ đề:** Phân tích giỏ hàng bán lẻ với thuật toán Apriori
+- **Chủ đề:** Chủ đề 4: Phân tích độ nhạy tham số (Parameter Sensitivity)
 - **Dataset:** Online Retail Dataset (UCI Machine Learning Repository)
 
 ---
@@ -386,18 +386,5 @@ python run_papermill.py
 4. **Parameter Sensitivity Analysis:** [Internal Document](Parameter_Sensitivity_Analysis.md)
 
 ---
-
-## 👨‍💻 Contributors
-- **Nguyễn Hòa Bình** (1671040004) - Data Preprocessing & EDA
-- **Đinh Tấn Phát** (1671040022) - Apriori Implementation & Visualization  
-- **Lưu Thanh Tùng** (1771040029) - Parameter Sensitivity & Business Insights
-
----
-
-## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details.
-
----
-
 **📧 Contact:** Nhóm 11 - KHMT  
 **📅 Last Updated:** December 13, 2025
