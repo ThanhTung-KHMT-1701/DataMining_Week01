@@ -11,11 +11,11 @@ pm.execute_notebook(
         DATA_PATH="data/raw/online_retail.csv",
         COUNTRY="United Kingdom",
         OUTPUT_DIR="data/processed",
-        PLOT_REVENUE=True,         # tắt bớt plot khi chạy batch
-        PLOT_TIME_PATTERNS=False,
-        PLOT_PRODUCTS=False,
-        PLOT_CUSTOMERS=False,
-        PLOT_RFM=False,
+        PLOT_REVENUE=True,         # Hiển thị biểu đồ doanh thu
+        PLOT_TIME_PATTERNS=True,   # Hiển thị xu hướng theo thời gian
+        PLOT_PRODUCTS=True,        # Hiển thị phân tích sản phẩm
+        PLOT_CUSTOMERS=True,       # Hiển thị phân tích khách hàng
+        PLOT_RFM=True,            # Hiển thị phân tích RFM
     ),
     kernel_name="python3",
 )
@@ -62,13 +62,13 @@ pm.execute_notebook(
         # Số luật để vẽ
         TOP_N_RULES=20,
 
-        # Tắt plot khi chạy batch (bật = True nếu muốn xem hình)
-        PLOT_TOP_LIFT=False,
-        PLOT_TOP_CONF=False,
-        PLOT_SCATTER=False,
-        PLOT_NETWORK=False,
-        PLOT_PLOTLY_NETWORK=False,
-        PLOT_PLOTLY_SCATTER=False,  
+        # Bật tất cả biểu đồ để xem kết quả phân tích
+        PLOT_TOP_LIFT=True,        # Top luật theo Lift
+        PLOT_TOP_CONF=True,        # Top luật theo Confidence
+        PLOT_SCATTER=True,         # Scatter plot Support-Confidence
+        PLOT_NETWORK=True,         # Biểu đồ mạng luật kết hợp
+        PLOT_PLOTLY_NETWORK=True,  # Biểu đồ mạng tương tác (Plotly)
+        PLOT_PLOTLY_SCATTER=True,  # Scatter plot tương tác (Plotly)
     ),
     kernel_name="python3",
 )
